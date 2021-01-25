@@ -24,6 +24,7 @@ public class DownloadVS {
         } else {
             System.out.println("File niet gevonden, beginnen met downloaden.");
             downloadFile();
+            unzipFile();
             fileExists();
         }
     }
@@ -65,7 +66,9 @@ public class DownloadVS {
         Process pro = new ProcessBuilder(command).start();
         pro.waitFor();
         System.out.println("Bestand gedownload");
+    }
 
+    public void unzipFile() throws InterruptedException, IOException {
         String[] commandUnzip = new String[]{"gzip", "-k", "-d",
                 "Eindopdracht/resources/variantSummary/variant_summary.txt.gz"};
         Process proUnzip = new ProcessBuilder(commandUnzip).start();

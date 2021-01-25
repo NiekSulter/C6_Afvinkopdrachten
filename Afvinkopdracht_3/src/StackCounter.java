@@ -2,7 +2,7 @@ import java.util.Stack;
 
 public class StackCounter {
 
-    String input = "Dit is een [] ({}) ()";
+    String input = "Dit is een [] (({}) ()";
     Stack<Character> charStackOpen = new Stack<>();
 
     public static void main(String[] args) {
