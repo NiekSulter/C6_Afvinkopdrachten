@@ -1,15 +1,16 @@
 public class Match {
 
-    protected int parentID1, parentID2, chromosome;
+    protected int parentID1, parentID2, chromosome, rsID;
     protected String parent1Nuclo, parent2Nuclo, varNuclo;
     protected boolean variantMatch;
 
-    public Match(int parentID1, int parentID2, int chromosome, String parent1Nuclo, String parent2Nuclo) {
+    public Match(int parentID1, int parentID2, int chromosome, String parent1Nuclo, String parent2Nuclo, int rsID) {
         setParentID1(parentID1);
         setParentID2(parentID2);
         setParent1Nuclo(parent1Nuclo);
         setParent2Nuclo(parent2Nuclo);
         setChromosome(chromosome);
+        setRSID(rsID);
 
     }
 
@@ -40,4 +41,8 @@ public class Match {
     public void setVarNuclo(String varNuclo) {this.varNuclo = varNuclo;}
 
     public String getVarNuclo() {return this.varNuclo;}
+
+    public void setRSID(int rsID) {this.rsID = rsID;}
+
+    public int getRSID() {return this.rsID;}
 }

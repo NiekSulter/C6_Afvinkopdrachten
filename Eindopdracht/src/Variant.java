@@ -23,11 +23,17 @@ public class Variant {
         }
     }
 
-    public int getChromosome() {return this.chromosome;}
+    public int getChromosome() {
+        return this.chromosome;
+    }
 
-    public void setRSID(int rsID) {this.rsID = rsID;}
+    public void setRSID(int rsID) {
+        this.rsID = rsID;
+    }
 
-    public int getRSID() {return this.rsID;}
+    public int getRSID() {
+        return this.rsID;
+    }
 
     public void setSNP(String snp1, String snp2) {
         if (!snp2.equals("na") && snp1.equals("na")) {
@@ -39,5 +45,7 @@ public class Variant {
         }
     }
 
-    public String getSNP() {return this.snp;}
+    public String getSNP() {
+        return this.snp;
+    }
 }
