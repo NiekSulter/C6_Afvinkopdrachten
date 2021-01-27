@@ -1,4 +1,4 @@
-public class Match {
+public class Match implements Comparable<Match>{
 
     protected int parentID1, parentID2, chromosome, rsID;
     protected String parent1Nuclo, parent2Nuclo, varNuclo;
@@ -45,4 +45,23 @@ public class Match {
     public void setRSID(int rsID) {this.rsID = rsID;}
 
     public int getRSID() {return this.rsID;}
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "parentID1=" + parentID1 +
+                ", parentID2=" + parentID2 +
+                ", chromosome=" + chromosome +
+                ", rsID=" + rsID +
+                ", parent1Nuclo='" + parent1Nuclo + '\'' +
+                ", parent2Nuclo='" + parent2Nuclo + '\'' +
+                ", varNuclo='" + varNuclo + '\'' +
+                ", variantMatch=" + variantMatch +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Match o) {
+        return Integer.compare(o.getChromosome(), this.chromosome);
+    }
 }

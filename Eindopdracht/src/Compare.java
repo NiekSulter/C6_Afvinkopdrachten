@@ -21,9 +21,9 @@ public class Compare {
         Set<Integer> s1 = createSet2(map1);
         Set<Integer> s2 = createSet2(map2);
 
-
         for (Integer i : s2) {
             if (!s1.add(i)) {
+                System.out.println(map1.get(i).getChromosome());
                 //System.out.println("dupe" + i);
                 Match m = new Match(map1.get(i).getParentID(),
                         map2.get(i).getParentID(),

@@ -15,8 +15,11 @@ public class DownloadVS {
 
         if (file.exists()) {
             String webHash = getWebHash();
+            System.out.println(webHash);
             String localHash = getLocalHash();
+            System.out.println(localHash);
             if (!webHash.equals(localHash)) {
+                file.delete();
                 fileExists();
                 System.out.println("Hashed niet gelijk!");
             }

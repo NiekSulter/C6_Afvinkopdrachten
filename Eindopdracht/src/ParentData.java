@@ -21,15 +21,10 @@ public class ParentData {
 
     public void setChromosome(String chromosome) {
         switch (chromosome) {
-            case "X":
-                this.chromosome = 24;
-                break;
-            case "Y":
-                this.chromosome = 25;
-                break;
-            case "MT":
-                this.chromosome = 26;
-                break;
+            case "X" -> this.chromosome = 23;
+            case "Y" -> this.chromosome = 24;
+            case "MT" -> this.chromosome = 25;
+            default -> this.chromosome = Integer.parseInt(chromosome);
         }
     }
 

@@ -18,13 +18,14 @@ public class OpenVS {
             //RSID, Chromosome, Alternative1, Alternative2
             //System.out.println(lines[9] + " " + lines[18] + " " + lines[22] + " " + lines[33]);
 
-            if (lines[9].equals("na") || lines[18].equals("na")) {
+            if (lines[9].equals("na") || lines[18].equals("na") || lines[18].equals("Un")) {
                 continue;
             }
+
             Variant v = makeObjects(lines[18], Integer.parseInt(lines[9]), lines[22], lines[33]);
             variantList.add(v);
             vMap.put(v.getRSID(), v);
-        }
+            }
 
         return vMap;
     }

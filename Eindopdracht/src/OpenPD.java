@@ -16,7 +16,7 @@ public class OpenPD {
             hMap.put(fileName, pData);
         }
 
-        System.out.println(hMap.keySet());
+        //System.out.println(hMap.keySet());
         return hMap;
     }
 
@@ -43,6 +43,7 @@ public class OpenPD {
 
     public static ParentData makeObject(String rsID, String chromosome, int position, String snp, int parentID) {
         ParentData p = new ParentData(rsID, chromosome, position, snp, parentID);
+        System.out.println(chromosome);
         return p;
     }
 
