@@ -8,15 +8,13 @@ import java.util.regex.Pattern;
 
 public class OpenPD {
 
-    public static HashMap<String, HashMap<Integer, ParentData>> createMap(String[] parentPaths) throws IOException {
-        HashMap<String, HashMap<Integer, ParentData>> hMap = new HashMap<>();
+    public static LinkedHashMap<String, HashMap<Integer, ParentData>> createMap(String[] parentPaths) throws IOException {
+        LinkedHashMap<String, HashMap<Integer, ParentData>> hMap = new LinkedHashMap<>();
         for (String i : parentPaths) {
             String fileName = getFilename(i);
             HashMap<Integer, ParentData> pData = readFile(i, fileName);
             hMap.put(fileName, pData);
         }
-
-        //System.out.println(hMap.keySet());
         return hMap;
     }
 
@@ -32,18 +30,16 @@ public class OpenPD {
                 continue;
             }
             String[] lines = line.split("\\s+");
-            ParentData object = makeObject(lines[0], lines[1], Integer.parseInt(lines[2]), lines[3], Integer.parseInt(parentID));
+            ParentData object = makeObject(lines[0], lines[1], Integer.parseInt(lines[2]), lines[3],
+                    Integer.parseInt(parentID));
             //pData.add(object);
             testMap.put(object.getrsID(), object);
         }
-
-        // System.out.println(testMap.keySet());
         return testMap;
     }
 
     public static ParentData makeObject(String rsID, String chromosome, int position, String snp, int parentID) {
         ParentData p = new ParentData(rsID, chromosome, position, snp, parentID);
-        System.out.println(chromosome);
         return p;
     }
 

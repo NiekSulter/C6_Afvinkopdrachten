@@ -17,17 +17,18 @@ public class Controller {
                 "Eindopdracht/resources/openSNP/9369.23andme.7677",
                 "Eindopdracht/resources/openSNP/8416.23andme.6745"};
 
-        //LinkedList<Variant> vList = OpenVS.readFile();
         HashMap<Integer, Variant> vMap = OpenVS.readFile();
+
+        System.out.println("Inlezen van Parent bestanden");
         HashMap<String, HashMap<Integer, ParentData>> hMap = OpenPD.createMap(parentPaths);
 
-        System.out.println("Inlezen van bestanden klaar");
+        //System.out.println("Inlezen van bestanden klaar");
 
-        System.out.println(vMap.size());
-        System.out.println(hMap.get("9369").size() + " " + hMap.get("8416").size());
+        //System.out.println(vMap.size());
+        //System.out.println(hMap.get("9369").size() + " " + hMap.get("8416").size());
 
         ArrayList<Match> dupes = Compare.checkDupes(hMap.get("9369"), hMap.get("8416"));
-        System.out.println(dupes.size());
+        //System.out.println(dupes.size());
 
 
         int x = 0;
@@ -56,7 +57,7 @@ public class Controller {
 
         for(Match m : dupes) {
             if (m.getVariantMatch()) {
-                System.out.println(m.toString());
+                //System.out.println(m.toString());
             }
         }
 

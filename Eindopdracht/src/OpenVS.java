@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class OpenVS {
 
     public static HashMap<Integer, Variant> readFile() throws IOException {
-        LinkedList<Variant> variantList = new LinkedList<>();
+        //LinkedList<Variant> variantList = new LinkedList<>();
         HashMap<Integer, Variant> vMap = new HashMap<>();
         File file = new File("Eindopdracht/resources/variantSummary/variant_summary.txt");
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -23,7 +23,7 @@ public class OpenVS {
             }
 
             Variant v = makeObjects(lines[18], Integer.parseInt(lines[9]), lines[22], lines[33]);
-            variantList.add(v);
+            //variantList.add(v);
             vMap.put(v.getRSID(), v);
             }
 
