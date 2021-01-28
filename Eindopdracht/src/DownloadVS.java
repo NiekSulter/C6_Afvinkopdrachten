@@ -10,7 +10,7 @@ public class DownloadVS {
         d1.fileExists();
     }
 
-    public void fileExists() throws IOException, InterruptedException {
+    public static void fileExists() throws IOException, InterruptedException {
         File file = new File("Eindopdracht/resources/variantSummary/variant_summary.txt");
 
         if (file.exists()) {
@@ -32,7 +32,7 @@ public class DownloadVS {
         }
     }
 
-    public String getWebHash() throws IOException {
+    public static String getWebHash() throws IOException {
         URL url = new URL("ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz.md5");
         URLConnection urlConn = url.openConnection();
         String webHash = "";
@@ -46,7 +46,7 @@ public class DownloadVS {
         return webHash;
     }
 
-    public String getLocalHash() throws IOException, InterruptedException {
+    public static String getLocalHash() throws IOException, InterruptedException {
         String[] command = new String[]{"md5", "Eindopdracht/resources/variantSummary/variant_summary.txt.gz"};
         Process pro = new ProcessBuilder(command).start();
         String localHash = "";
@@ -62,7 +62,7 @@ public class DownloadVS {
         return localHash;
     }
 
-    public void downloadFile() throws InterruptedException, IOException {
+    public static void downloadFile() throws InterruptedException, IOException {
         String[] command = new String[]{"wget", "-q", "-O",
                 "Eindopdracht/resources/variantSummary/variant_summary.txt.gz",
                 "ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz"};
@@ -71,7 +71,7 @@ public class DownloadVS {
         System.out.println("Bestand gedownload");
     }
 
-    public void unzipFile() throws InterruptedException, IOException {
+    public static void unzipFile() throws InterruptedException, IOException {
         String[] commandUnzip = new String[]{"gzip", "-k", "-d",
                 "Eindopdracht/resources/variantSummary/variant_summary.txt.gz"};
         Process proUnzip = new ProcessBuilder(commandUnzip).start();

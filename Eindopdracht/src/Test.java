@@ -30,7 +30,7 @@ public class Test {
 
                 System.out.println(q.get(i) + " " + q.get(j));
 
-                ArrayList<Match> dupes = Compare.checkDupes(hMap.get(q.get(i)), hMap.get(q.get(j)));
+                ArrayList<Match> dupes = Compare.compareSetList(hMap.get(q.get(i)), hMap.get(q.get(j)));
 
                 ArrayList<Match> confirmedMatches = checkDupes(dupes, vMap);
 
@@ -38,10 +38,6 @@ public class Test {
 
                 String fileName = q.get(i) + "_" + q.get(j) + ".txt";
                 writeFile(confirmedMatches, fileName);
-
-
-
-
 
                 //System.out.println(q.get(i) + " " + q.get(j));
                 //String[] paths = new String[] {q.get(i), q.get(j)};
@@ -54,11 +50,6 @@ public class Test {
         }
 
         //writeFile(confirmedMatches);
-    }
-
-    public static void getFilesInDirectory() {
-        File folder = new File("Eindopdracht/resources/openSNP");
-        System.out.println(Arrays.toString(folder.listFiles()));
     }
 
     public static ArrayList<Match> checkDupes(ArrayList<Match> dupes, HashMap<Integer, Variant> vMap) {
@@ -82,7 +73,7 @@ public class Test {
     }
 
     public static void writeFile(ArrayList<Match> confirmedMatches, String fileName) throws IOException {
-        File file = new File(fileName);
+        File file = new File("Eindopdracht/resources/output/" + fileName);
         file.createNewFile();
 
         FileWriter writer = new FileWriter(file);

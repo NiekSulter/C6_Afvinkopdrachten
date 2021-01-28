@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Compare {
 
@@ -36,9 +38,23 @@ public class Compare {
         return matches;
     }
 
-    public static ArrayList<Match> checkDupes(HashMap<Integer, ParentData> map1, HashMap<Integer, ParentData> map2) {
-        ArrayList<Match> dupes = compareSetList(map1, map2);
-        return dupes;
-    }
+    public static ArrayList<Match> checkDupes(ArrayList<Match> dupes, HashMap<Integer, Variant> vMap) {
+        int x = 0;
+        ArrayList<Match> confirmedMatches = new ArrayList<>();
 
+        for (Match m : dupes) {
+            if (vMap.containsKey(m.getRSID())) {
+                Pattern pattern = Pattern.compile(".*[ " + (m.getParent1Nuclo() + m.getParent2Nuclo()) + "].*");
+                Matcher matcher = pattern.matcher(vMap.get(m.getRSID()).getSNP());
+                if (matcher.find()) {
+                    m.setVarNuclo(vMap.get(m.getRSID()).getSNP());
+                    m.setVariantMatch(true);
+                    confirmedMatches.add(m);
+                    x += 1;
+                }
+            }
+        }
+        System.out.println(x);
+        return confirmedMatches;
+    }
 }

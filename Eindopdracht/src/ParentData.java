@@ -3,7 +3,9 @@ public class ParentData {
     protected int rsID, chromosome, position, parentID;
     protected String genotype;
 
-    public ParentData(String rsID, String chromosome, int position, String genotype, int parentID) {
+    public ParentData(String rsID, String chromosome,
+                      int position, String genotype,
+                      int parentID) {
         setrsID(rsID);
         setChromosome(chromosome);
         setPosition(position);
@@ -12,7 +14,8 @@ public class ParentData {
     }
 
     public void setrsID(String rsID) {
-        this.rsID = Integer.parseInt(rsID.replaceAll("\\D+", ""));
+        this.rsID = Integer.parseInt(rsID.replaceAll("\\D+",
+                ""));
     }
 
     public int getrsID() {
