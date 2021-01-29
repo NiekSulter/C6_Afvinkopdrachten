@@ -1,30 +1,46 @@
-import java.io.*;
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * Class om het variant_summary bestand te downloaden, unzippen en de
+ * checksum te controleren.
+ */
+
 public class DownloadVS {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        DownloadVS d1 = new DownloadVS();
-        d1.fileExists();
-    }
+    /**
+     * Functie om te bepalen of het variant_summary bestand bestaat.
+     */
 
-    public static void fileExists() throws IOException, InterruptedException {
-        File file = new File("Eindopdracht/resources/variantSummary/variant_summary.txt");
+    public static void fileExists() {
+        File file = new File
+                ("Eindopdracht/resources/variantSummary/" +
+                        "variant_summary.txt");
 
         if (file.exists()) {
+            /* Als het variant_summary bestand al bestaat wordt de hash
+            vergeleken met het bestand van de NCBI servers */
             String webHash = getWebHash();
-            System.out.println(webHash);
+            System.out.println("Hash van NCBI servers: " + webHash);
             String localHash = getLocalHash();
-            System.out.println(localHash);
+            System.out.println("Hash van lokaal bestand: " + localHash);
+
             if (!webHash.equals(localHash)) {
+                /* Als de hashes niet overeen komen wordt het lokale bestand
+                verwijderd en opnieuw gedownload. */
                 file.delete();
+                System.out.println("Hashes niet gelijk!");
                 fileExists();
-                System.out.println("Hashed niet gelijk!");
             }
             System.out.println("File is aanwezig en hash klopt");
         } else {
+
+            /* Als het variant_summary bestand niet bestaat wordt het
+            gedownload en unzipt */
             System.out.println("File niet gevonden, beginnen met downloaden.");
             downloadFile();
             unzipFile();
@@ -32,51 +48,103 @@ public class DownloadVS {
         }
     }
 
-    public static String getWebHash() throws IOException {
-        URL url = new URL("ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz.md5");
-        URLConnection urlConn = url.openConnection();
-        String webHash = "";
+    /**
+     * Functie om de hash van het variant_summary bestand op te halen van de
+     * NCBI FTP server.
+     *
+     * @return de md5 hash van het variant_summary bestand.
+     */
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            webHash = line.split(" ")[0];
+    public static String getWebHash() {
+        String webHash = "";
+        try {
+            URL url = new URL("ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/" +
+                    "tab_delimited/variant_summary.txt.gz.md5");
+            URLConnection urlConn = url.openConnection();
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(urlConn.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                webHash = line.split(" ")[0];
+            }
+        } catch (IOException e) {
+            System.out.println(e);
         }
 
         return webHash;
     }
 
-    public static String getLocalHash() throws IOException, InterruptedException {
-        String[] command = new String[]{"md5", "Eindopdracht/resources/variantSummary/variant_summary.txt.gz"};
-        Process pro = new ProcessBuilder(command).start();
-        String localHash = "";
+    /**
+     * Functie om de hash van het lokale variant_summary bestand op te halen.
+     *
+     * @return de md5 hash van het lokale variant_summary bestand.
+     */
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(pro.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            localHash = line.split(" ")[3];
+    public static String getLocalHash() {
+        try {
+            String[] command = new String[]{"md5", "Eindopdracht/resources/" +
+                    "variantSummary/variant_summary.txt.gz"};
+
+            Process pro = new ProcessBuilder(command).start();
+
+            String localHash = "";
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(pro.getInputStream()));
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                localHash = line.split(" ")[3];
+            }
+
+            pro.waitFor();
+
+            return localHash;
+
+        } catch (IOException | InterruptedException e) {
+            System.out.println(e);
+            return "";
         }
-
-        pro.waitFor();
-
-        return localHash;
     }
 
-    public static void downloadFile() throws InterruptedException, IOException {
-        String[] command = new String[]{"wget", "-q", "-O",
-                "Eindopdracht/resources/variantSummary/variant_summary.txt.gz",
-                "ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz"};
-        Process pro = new ProcessBuilder(command).start();
-        pro.waitFor();
-        System.out.println("Bestand gedownload");
+    /**
+     * Functie om het variant_summary bestand te downloaden van de NCBI FTP
+     * servers.
+     */
+
+    public static void downloadFile() {
+        try {
+            String[] command = new String[]{"wget", "-q", "-O",
+                    "Eindopdracht/resources/variantSummary/" +
+                            "variant_summary.txt.gz",
+                    "ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar" +
+                            "/tab_delimited/variant_summary.txt.gz"};
+
+            Process pro = new ProcessBuilder(command).start();
+            pro.waitFor();
+            System.out.println("Bestand gedownload");
+        } catch (IOException | InterruptedException e) {
+            System.out.println(e);
+        }
     }
 
-    public static void unzipFile() throws InterruptedException, IOException {
-        String[] commandUnzip = new String[]{"gzip", "-k", "-d",
-                "Eindopdracht/resources/variantSummary/variant_summary.txt.gz"};
-        Process proUnzip = new ProcessBuilder(commandUnzip).start();
-        proUnzip.waitFor();
-        System.out.println("Bestand geunzipt");
+    /**
+     * Functie om het gedownloade variant_summary bestand te unzippen.
+     */
+
+    public static void unzipFile() {
+        try {
+            String[] commandUnzip = new String[]{"gzip", "-k", "-d",
+                    "Eindopdracht/resources/variantSummary/" +
+                            "variant_summary.txt.gz"};
+
+            Process proUnzip = new ProcessBuilder(commandUnzip).start();
+            proUnzip.waitFor();
+            System.out.println("Bestand geunzipt");
+        } catch (IOException | InterruptedException e) {
+            System.out.println(e);
+        }
     }
 }
 
